@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".GameActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contentPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="25dp"
+        android:orientation="horizontal">
+
+        <com.rayzem.ibingo.BingoCard
+            android:layout_weight="25"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"/>
+
+        <com.rayzem.ibingo.BingoCard
+            android:layout_weight="25"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp">
+
+
+        </com.rayzem.ibingo.BingoCard>
+
+        <!--<GridLayout
+            android:layout_weight="15"
+            android:id="@+id/bingoCard"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:orientation="horizontal"
+            android:columnCount="5"
+            android:rowCount="5"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/background_light">
+
+        </GridLayout>
+
+        <GridLayout
+            android:layout_weight="15"
+            android:id="@+id/bingoCard2"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:orientation="horizontal"
+            android:columnCount="5"
+            android:rowCount="5"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/background_light">
+
+        </GridLayout>-->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:background="@android:color/black"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
