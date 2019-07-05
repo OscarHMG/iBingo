@@ -2,9 +2,11 @@ package com.rayzem.ibingo;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -12,25 +14,44 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
+public class BingoCard extends LinearLayout implements Cell.OnToggledListener, View.OnClickListener {
     private Cell[][] cells;
     private GridLayout gridLayout;
+    private Button bingoButton;
+    private LinearLayout contentPanel;
     private Context context;
     //int poolNumbers [];
-    ArrayList<Integer> poolNumbers;
+
+    private BingoWinInterface bingoWinInterface;
+
+    private ArrayList<Integer> poolNumbers;
+
+    //Simulate bingo
 
 
-    public BingoCard(Context context, AttributeSet attrs) {
+
+    //This information come from the SOCKET - HOW TO WIN : HORIZONTAL, VERTICAL, DIAGONAL, CORNERS.
+    private String PATRON_TO_WIN;
+
+
+    public BingoCard(Context context, AttributeSet attrs, String patron) {
         super(context, attrs);
         this.context = context;
 
+        poolNumbers = new ArrayList<>();
+        this.PATRON_TO_WIN = patron;
+
         View v = LayoutInflater.from(context).inflate(R.layout.bingo_card_view, this, true);
+
         gridLayout = v.findViewById(R.id.bingoCard);
+        bingoButton = v.findViewById(R.id.bingoButton);
 
         initBingoCard(gridLayout.getColumnCount(),gridLayout.getRowCount());
-
+        bingoButton.setOnClickListener(this);
 
     }
+
+
 
     /**
      * Function to init the all the bingo card
@@ -39,6 +60,8 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
      * @param numRow
      */
     public void initBingoCard(int numCol, int numRow) {
+
+
         cells = new Cell[numRow][numCol];
 
         for (int i = 0; i < numRow; i++) {
@@ -49,7 +72,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
                 gridLayout.addView(cell);
             }
         }
-
         gridLayout.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -57,9 +79,10 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
 
                         final int MARGIN = 5;
 
-
+                        //Here draw the grid dinamycally. IMPORTANT: In height, i have to substract 100 dp to
+                        // make the button appear in the bottom.
                         int gridLayoutWidth = gridLayout.getWidth();
-                        int gridLayoutHeight = gridLayout.getHeight();
+                        int gridLayoutHeight = gridLayout.getHeight() - 100;
                         int numOfCol = gridLayout.getColumnCount();
                         int numOfRow = gridLayout.getRowCount();
                         int cellWidth = gridLayoutWidth / numOfCol;
@@ -119,21 +142,23 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
             }
 
         }
+
+        //In the center set -1, and set selected.
+        cells[3][2].setSelected(true);
+        cells[3][2].setContent(0);
     }
 
 
     private void generateNumber(int min, int max, int colIndex){
-
-
-        boolean isValid = false;
-
+        boolean isValid;
         for (int j = 1; j < gridLayout.getRowCount(); j++) {
-            //double randomNumber = Math.random();
+
             isValid = false;
             while (!isValid) {
+
+
                 Random ran = new Random();
                 int randomInt = min + ran.nextInt(max - min + 1);
-                //randomNumber = (randomNumber * max) + min;
                 if (!checkGeneratedNumber(colIndex, randomInt)) {
                     cells[j][colIndex].setContent(randomInt);
                     isValid = true;
@@ -142,8 +167,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
                 }
 
             }
-
-
         }
 
     }
@@ -164,11 +187,162 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
     @Override
     public void OnToogled(Cell c, boolean selected) {
         if(c.getPositionX() != 0 ){
-            String positionClicked = ""+c.getContent()+" - ("+c.getPositionX() +", " + c.getPositionY()+")";
-            Toast.makeText(context, ""+positionClicked, Toast.LENGTH_LONG).show();
+
+
         }
 
 
     }
 
+
+    public ArrayList<Integer> sendToVerifyWinnerNumbers(){
+        ArrayList<Integer> winnerNumbers = new ArrayList<>();
+        switch (PATRON_TO_WIN){
+            case "HORIZONTAL":
+                winnerNumbers = verifyHorizontalBingo();
+                break;
+            case "VERTICAL":
+                winnerNumbers = verifyVerticalHorizontal();
+                break;
+
+            case "DIAGONAL":
+                //check 1st, 1 diagonal
+                winnerNumbers = verifyAscendentDiagonal();
+                //If this is empty, check the other
+                if(winnerNumbers.isEmpty())
+                    winnerNumbers = verifyDescendentDiagonal();
+
+                break;
+            case "CORNERS":
+                verifyCornersBingo();
+                break;
+        }
+
+        return winnerNumbers;
+    }
+
+    public ArrayList<Integer> verifyHorizontalBingo(){
+        ArrayList<Integer> winnerNumbers = new ArrayList<>();
+        int cont = 0;
+        boolean isBingo = false;
+        for(int i = 1; i< gridLayout.getRowCount(); i++){
+            for(int j = 0; j < gridLayout.getColumnCount(); j++){
+                if(cells[i][j].isSelected()){
+                    cont ++;
+                    //Log.i("OSCAR", "REVISANDO: "+cells[i][j].getContent());
+                    winnerNumbers.add(new Integer(cells[i][j].getContent()));
+                }else{
+                    cont = 0;
+                    winnerNumbers.clear();
+                    break;
+                }
+            }
+
+            if(cont == 5) {
+                Log.i("OSCAR", "REVISANDO: BINGO!" );
+                return winnerNumbers;
+            }else{
+                Log.i("OSCAR", "REVISANDO: LINEA SIGUIENTE!" );
+            }
+
+        }
+        Log.i("OSCAR", "REVISANDO: NO HUBO BINGO" );
+        return winnerNumbers;
+    }
+
+    public ArrayList<Integer> verifyVerticalHorizontal(){
+        int cont = 0;
+        ArrayList<Integer> winnerNumbers = new ArrayList<>();
+
+        for(int j = 0; j< gridLayout.getColumnCount(); j++){
+            for(int i = 1; i < gridLayout.getRowCount(); i++){
+
+                if(cells[i][j].isSelected()){
+                    cont ++;
+                    //Log.i("OSCAR", "REVISANDO: "+cells[i][j].getContent());
+                    winnerNumbers.add(new Integer(cells[i][j].getContent()));
+                }else{
+                    cont = 0;
+                    winnerNumbers.clear();
+                    break;
+                }
+
+                if(cont == 5) {
+                    Log.i("OSCAR", "VERTICAL REVISANDO: linea completa vertical!" );
+                    return winnerNumbers;
+                }else{
+                    Log.i("OSCAR", "REVISANDO: LINEA SIGUIENTE! no vertical" );
+                }
+            }
+        }
+
+        return winnerNumbers;
+    }
+
+    public ArrayList<Integer> verifyCornersBingo(){
+        ArrayList<Integer> winnerNumbers = new ArrayList<>();
+
+        if(cells[1][0].isSelected() && cells[5][0].isSelected() && cells[1][4].isSelected() && cells[5][4].isSelected()){
+            winnerNumbers.add(cells[1][0].getContent());
+            winnerNumbers.add(cells[5][0].getContent());
+            winnerNumbers.add(cells[1][4].getContent());
+            winnerNumbers.add(cells[5][4].getContent());
+            Log.i("OSCAR","CORNERS BINGO!");
+        }
+
+        return winnerNumbers;
+    }
+
+
+    public ArrayList<Integer> verifyDescendentDiagonal(){
+        ArrayList<Integer> winnerNumbers = new ArrayList<>();
+
+        if(cells[1][0].isSelected() && cells[2][1].isSelected() && cells[3][2].isSelected() && cells[4][3].isSelected() && cells[5][4].isSelected() ){
+            winnerNumbers.add(cells[1][0].getContent());
+            winnerNumbers.add(cells[2][1].getContent());
+            //winnerNumbers.add(cells[3][2].getContent());
+            winnerNumbers.add(cells[4][3].getContent());
+            winnerNumbers.add(cells[5][4].getContent());
+            Log.i("OSCAR","DIAGONAL BINGO!");
+
+        }
+
+        return winnerNumbers;
+    }
+
+
+    public ArrayList<Integer> verifyAscendentDiagonal(){
+        ArrayList<Integer> winnerNumbers = new ArrayList<>();
+
+        if(cells[5][0].isSelected() && cells[4][1].isSelected() && cells[3][2].isSelected() && cells[2][3].isSelected() && cells[1][4].isSelected() ){
+            winnerNumbers.add(cells[1][0].getContent());
+            winnerNumbers.add(cells[2][1].getContent());
+            //winnerNumbers.add(cells[3][2].getContent());
+            winnerNumbers.add(cells[4][3].getContent());
+            winnerNumbers.add(cells[5][4].getContent());
+            Log.i("OSCAR","DIAGONAL ASCENDENTE BINGO!");
+
+        }
+
+        return winnerNumbers;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.bingoButton:
+                Toast.makeText(context, "BINGO!", Toast.LENGTH_SHORT).show();
+
+                bingoWinInterface.verifyBingoNumbers(sendToVerifyWinnerNumbers());
+                break;
+        }
+    }
+
+    public void setBingoWinInterface(BingoWinInterface bingoWinInterface) {
+        this.bingoWinInterface = bingoWinInterface;
+    }
+
+    public interface BingoWinInterface {
+        void verifyBingoNumbers(ArrayList<Integer> number);
+    }
 }

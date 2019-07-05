@@ -76,7 +76,7 @@ public class Cell extends View {
         }else if(positionY == 2 && positionX == 3){
             paint.setColor(Color.BLACK);
             paint.setTextSize(40);
-            canvas.drawText("X",  xPos, yPos, paint);
+            //canvas.drawText("X",  xPos, yPos, paint);
         }else{
             if (selected && positionX != 0) {
                 canvas.drawColor(Color.RED);
@@ -88,6 +88,8 @@ public class Cell extends View {
             canvas.drawText("" + content,  xPos, yPos, paint);
         }
     }
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -144,6 +146,16 @@ public class Cell extends View {
     public void setContent(int content) {
         this.content = content;
         this.invalidate();
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     //Interface to handle click events.

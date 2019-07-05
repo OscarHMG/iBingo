@@ -22,10 +22,10 @@
         android:layout_marginRight="25dp"
         android:orientation="horizontal">
 
-        <com.rayzem.ibingo.BingoCard
+        <!--<com.rayzem.ibingo.BingoCard
             android:layout_weight="25"
             android:layout_width="0dp"
-            android:layout_height="220dp"
+            android:layout_height="280dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginRight="5dp"
@@ -34,12 +34,12 @@
         <com.rayzem.ibingo.BingoCard
             android:layout_weight="25"
             android:layout_width="0dp"
-            android:layout_height="220dp"
+            android:layout_height="280dp"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"/>-->
 
 
-        </com.rayzem.ibingo.BingoCard>
+
 
         <!--<GridLayout
             android:layout_weight="15"
