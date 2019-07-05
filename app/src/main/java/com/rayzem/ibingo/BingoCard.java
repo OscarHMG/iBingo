@@ -10,9 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
-    private Cell[] cells;
+    private Cell[][] cells;
     private GridLayout gridLayout;
     private Context context;
     //int poolNumbers [];
@@ -28,6 +29,7 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
 
         initBingoCard(gridLayout.getColumnCount(),gridLayout.getRowCount());
 
+
     }
 
     /**
@@ -37,20 +39,13 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
      * @param numRow
      */
     public void initBingoCard(int numCol, int numRow) {
-        cells = new Cell[numCol * numRow];
-        int cont = 0;
-
+        cells = new Cell[numRow][numCol];
 
         for (int i = 0; i < numRow; i++) {
             for (int j = 0; j < numCol; j++) {
-                double randomNumber = Math.random();
-                randomNumber = randomNumber * 75 + 1;
-                Cell cell = new Cell(context, i, j, (int) randomNumber);
+                Cell cell = new Cell(context, i, j, -1);
                 cell.setToogledListener(this);
-                cells[cont] = cell;
-
-                cont++;
-
+                cells[i][j] = cell;
                 gridLayout.addView(cell);
             }
         }
@@ -61,7 +56,7 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
                     public void onGlobalLayout() {
 
                         final int MARGIN = 5;
-                        int numCell = 0;
+
 
                         int gridLayoutWidth = gridLayout.getWidth();
                         int gridLayoutHeight = gridLayout.getHeight();
@@ -71,13 +66,14 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
                         int cellHeight = gridLayoutHeight / numOfRow;
 
 
-                        for(int i = 0 ; i < numOfCol * numOfRow; i++){
-                            GridLayout.LayoutParams params = (GridLayout.LayoutParams) cells[numCell].getLayoutParams();
-                            params.width = cellWidth - 2 * MARGIN;
-                            params.height = cellHeight - 2 * MARGIN;
-                            params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-                            cells[numCell].setLayoutParams(params);
-                            numCell++;
+                        for (int i = 0; i < numOfRow; i++) {
+                            for (int j = 0; j < numOfCol; j++) {
+                                GridLayout.LayoutParams params = (GridLayout.LayoutParams) (cells[i][j]).getLayoutParams();
+                                params.width = cellWidth - 2 * MARGIN;
+                                params.height = cellHeight - 2 * MARGIN;
+                                params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
+                                (cells[i][j]).setLayoutParams(params);
+                            }
                         }
 
 
@@ -85,7 +81,11 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
                     }
                 }
         );
+
+        generateBingoCardNumbers();
     }
+
+
 
 
     /**
@@ -94,58 +94,80 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener {
      * N = 31 al 45
      * G = 46 al 60
      * O = 61 al 75
-     * @param letter
      * @return
      */
-    private int generateBingoNumber(String letter){
-        int min = 0, max = 0;
-
-        switch (letter){
-            case "B":
-                generateNumber(1, 15);
-                break;
-            case "I":
-                generateNumber(16, 30);
-                break;
-            case "N":
-                
-                break;
-            case "G":
-                break;
-            case "O":
-                break;
-            default:
-                break;
-        }
-
-        return 0;
-    }
-
-
-    private int generateNumber(int min, int max){
-        boolean isValid = false;
-        double randomNumber = Math.random();
-        int numGenerated = -1;
-
-        while(!isValid){
-            numGenerated = (int) randomNumber * min + max;
-            for(int col = 0; col< cells.length; col++){
-                if(cells[col].getContent() == numGenerated){
+    private void generateBingoCardNumbers(){
+        for(int i = 0; i < gridLayout.getColumnCount();i++){
+            switch (i){
+                case 0:
+                    generateNumber(1, 15, i);
                     break;
-                }else{
-                    isValid = true;
-                }
+                case 1:
+                    generateNumber(16, 30, i);
+                    break;
+                case 2:
+                    generateNumber(31, 45, i);
+                    break;
+                case 3:
+                    generateNumber(46, 60, i);
+                    break;
+                case 4:
+                    generateNumber(61, 75, i);
+                    break;
+                default:
+                    break;
             }
-        }
-        return numGenerated;
-    }
-    /**/
 
+        }
+    }
+
+
+    private void generateNumber(int min, int max, int colIndex){
+
+
+        boolean isValid = false;
+
+        for (int j = 1; j < gridLayout.getRowCount(); j++) {
+            //double randomNumber = Math.random();
+            isValid = false;
+            while (!isValid) {
+                Random ran = new Random();
+                int randomInt = min + ran.nextInt(max - min + 1);
+                //randomNumber = (randomNumber * max) + min;
+                if (!checkGeneratedNumber(colIndex, randomInt)) {
+                    cells[j][colIndex].setContent(randomInt);
+                    isValid = true;
+                } else {
+                    isValid = false;
+                }
+
+            }
+
+
+        }
+
+    }
+
+
+
+    public boolean checkGeneratedNumber(int y, int number){
+        boolean found = false;
+        for(int i = 1; i < gridLayout.getRowCount(); i++){
+            if (cells[i][y].getContent() == number)
+                found = true;
+
+        }
+        return found;
+
+    }
 
     @Override
     public void OnToogled(Cell c, boolean selected) {
-        String positionClicked = c.getPositionX() +", " + c.getPositionY();
-        Toast.makeText(context, "Position: "+positionClicked, Toast.LENGTH_LONG).show();
+        if(c.getPositionX() != 0 ){
+            String positionClicked = ""+c.getContent()+" - ("+c.getPositionX() +", " + c.getPositionY()+")";
+            Toast.makeText(context, ""+positionClicked, Toast.LENGTH_LONG).show();
+        }
+
 
     }
 

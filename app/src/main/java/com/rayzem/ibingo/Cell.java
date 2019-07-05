@@ -40,8 +40,7 @@ public class Cell extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
     }
 
     @Override
@@ -52,17 +51,10 @@ public class Cell extends View {
         int xPos = (canvas.getWidth() / 2);
         int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
 
-        //First, need to paint the background
-        if (selected) {
-            canvas.drawColor(Color.RED);
-        } else {
-            canvas.drawColor(Color.LTGRAY);
-        }
-
-
         if (positionX == 0) {
+            canvas.drawColor(Color.TRANSPARENT);
             paint.setColor(Color.RED);
-            paint.setTextSize(30);
+            paint.setTextSize(50);
             switch (positionY) {
                 case 0:
                     canvas.drawText("B", xPos, yPos, paint);
@@ -86,13 +78,15 @@ public class Cell extends View {
             paint.setTextSize(40);
             canvas.drawText("X",  xPos, yPos, paint);
         }else{
+            if (selected && positionX != 0) {
+                canvas.drawColor(Color.RED);
+            } else {
+                canvas.drawColor(Color.LTGRAY);
+            }
             paint.setColor(Color.BLACK);
-            paint.setTextSize(30);
+            paint.setTextSize(50);
             canvas.drawText("" + content,  xPos, yPos, paint);
         }
-
-
-
     }
 
     @Override
@@ -149,6 +143,7 @@ public class Cell extends View {
 
     public void setContent(int content) {
         this.content = content;
+        this.invalidate();
     }
 
     //Interface to handle click events.
