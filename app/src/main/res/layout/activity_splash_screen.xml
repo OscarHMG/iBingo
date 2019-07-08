@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashScreenActivity"
+    android:background="@drawable/ibingo_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/containerHome"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:visibility="visible"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo_iBingo"
+            android:src="@drawable/ibingo_logo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:id="@+id/btn_play"
+            android:layout_gravity="center_horizontal"
+            android:text="PLAY"
+            android:layout_width="150dp"
+            android:background="@drawable/button_round"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerNumTables"
+        android:visibility="gone"
+        android:padding="15dp"
+        android:background="@drawable/background_transparent"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/one_table_match"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ibingo_logo_no_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:text="1 TABLA"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/two_table_match"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ibingo_logo_no_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:text="2 TABLAS"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>

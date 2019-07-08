@@ -30,16 +30,20 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        //On SomeActivity :
+
+        int numBingoCards = getIntent().getIntExtra("numBingoCards", 1);
+
         poolNumbers = new ArrayList<>();
         poolNumbers.add(new Integer(0));
         bingoCards = new ArrayList<>();
 
         contentPanel = findViewById(R.id.contentPanel);
 
+
+
         b1 = new BingoCard(this, null, "HORIZONTAL");
-        //b2 = new BingoCard(this, null);
-
-
+        //b2 = new BingoCard(this, null, "HORIZONTAL");
 
         contentPanel.addView(b1);
         //contentPanel.addView(b2);
@@ -48,10 +52,28 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         //bingoCards.add(b2);
 
 
-        setLayoutParameters();
+
         b1.setBingoWinInterface(this);
+        //b2.setBingoWinInterface(this);
+
+        /*if(numBingoCards == 2) {
+            setBingoCards(b1);
+            setBingoCards(b2);
+        }else{
+            setBingoCards(b1);
+        }
 
 
+        setLayoutParameters();*/
+
+        if(numBingoCards == 2){
+            b2 = new BingoCard(this, null, "HORIZONTAL");
+            contentPanel.addView(b2);
+            bingoCards.add(b2);
+            b2.setBingoWinInterface(this);
+        }
+
+        setLayoutParameters();
 
     }
 
@@ -64,6 +86,15 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
     }
 
+
+    private void setBingoCards(BingoCard bingoCard){
+        bingoCard = new BingoCard(this, null, "HORIZONTAL");
+        contentPanel.addView(bingoCard);
+        bingoCards.add(b1);
+        //setLayoutParameters();
+        bingoCard.setBingoWinInterface(this);
+
+    }
     private void setLayoutParameters(){
         for(BingoCard bc: bingoCards){
             LinearLayout.LayoutParams properties = (LinearLayout.LayoutParams) bc.getLayoutParams();
@@ -109,7 +140,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         }else{
             //False alarm
             Log.i("OSCAR", "No bingo!");
-            
+
         }
     }
 
