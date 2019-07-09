@@ -3,12 +3,14 @@ package com.rayzem.ibingo;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -47,7 +49,15 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
         bingoButton = v.findViewById(R.id.bingoButton);
 
         initBingoCard(gridLayout.getColumnCount(),gridLayout.getRowCount());
-        bingoButton.setOnClickListener(this);
+
+
+
+
+
+        /*bingoButton.setOnClickListener(this);
+        LayoutParams layoutParams = (LayoutParams) bingoButton.getLayoutParams();
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        bingoButton.setLayoutParams(layoutParams);*/
 
     }
 
@@ -77,12 +87,12 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
                     @Override
                     public void onGlobalLayout() {
 
-                        final int MARGIN = 5;
+                        int MARGIN = 5;
 
                         //Here draw the grid dinamycally. IMPORTANT: In height, i have to substract 100 dp to
                         // make the button appear in the bottom.
                         int gridLayoutWidth = gridLayout.getWidth();
-                        int gridLayoutHeight = gridLayout.getHeight() - 100;
+                        int gridLayoutHeight = gridLayout.getHeight() - 150;
                         int numOfCol = gridLayout.getColumnCount();
                         int numOfRow = gridLayout.getRowCount();
                         int cellWidth = gridLayoutWidth / numOfCol;
@@ -90,17 +100,30 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
 
 
                         for (int i = 0; i < numOfRow; i++) {
+
+                            MARGIN =  i == 0 ? 0: 5;
+
                             for (int j = 0; j < numOfCol; j++) {
                                 GridLayout.LayoutParams params = (GridLayout.LayoutParams) (cells[i][j]).getLayoutParams();
-                                params.width = cellWidth - 2 * MARGIN;
-                                params.height = cellHeight - 2 * MARGIN;
+                                //params.width = cellWidth - 2 * MARGIN;
+                                params.width = cellHeight - 2*MARGIN;
+                                params.height = cellHeight - 2*MARGIN;
+
+
                                 params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
                                 (cells[i][j]).setLayoutParams(params);
+                                cells[i][j].setBackgroundColor(getResources().getColor(R.color.transparent_gray));
                             }
                         }
 
 
                         gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+
+
+                        //gridLayout.setBackground(getResources().getDrawable(R.drawable.wood_texture));
+
+
                     }
                 }
         );

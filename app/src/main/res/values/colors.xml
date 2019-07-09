@@ -10,4 +10,20 @@
     <color name="white">#ffff</color>
     <color name="lightGray">#EFF0F1</color>
     <color name="black">#000</color>
+
+    <color name="lightBrown">#ece0c7</color>
+    <color name="brown_2">#e3c39b</color>
+    <color name="darkBrown">#3e150f</color>
+    <color name="yellow">#e6ca2b</color>
+    <color name="gray">#ac9d8f</color>
+    <color name="blue">#366684</color>
+    <color name="gray_2">#6c655f</color>
+    <color name="brown_3">#927862</color>
+
+    <color name="red_2">#e42828</color>
+    <color name="transparent_red">#35e42828</color>
+    <color name="transparent_lightGray">#35EFF0F1</color>
+
+    <color name="transparent_gray">#35eff0f1</color>
+
 </resources>

@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
+
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
 
         <GridLayout
+
             android:id="@+id/bingoCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+
             android:columnCount="5"
             android:rowCount="6"
-            android:background="@android:color/background_light"/>
+            />
+
         <Button
             android:id="@+id/bingoButton"
+            android:layout_below="@+id/bingoCard"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B I N G O "/>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/button_round"
+            android:textStyle="bold"
+            android:text="B I N G O !!"/>
 
 
-    </LinearLayout>
+
+
+    </RelativeLayout>
 
 
 
+    <!-- android:background="@drawable/wood_texture"-->
 
 </LinearLayout>

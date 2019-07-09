@@ -45,10 +45,11 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         b1 = new BingoCard(this, null, "HORIZONTAL");
         //b2 = new BingoCard(this, null, "HORIZONTAL");
 
-        contentPanel.addView(b1);
+        contentPanel.addView(b1,0);
         //contentPanel.addView(b2);
 
         bingoCards.add(b1);
+
         //bingoCards.add(b2);
 
 
@@ -68,7 +69,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
         if(numBingoCards == 2){
             b2 = new BingoCard(this, null, "HORIZONTAL");
-            contentPanel.addView(b2);
+            contentPanel.addView(b2, 0);
             bingoCards.add(b2);
             b2.setBingoWinInterface(this);
         }
@@ -98,11 +99,11 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
     private void setLayoutParameters(){
         for(BingoCard bc: bingoCards){
             LinearLayout.LayoutParams properties = (LinearLayout.LayoutParams) bc.getLayoutParams();
-            properties.setMargins(15,25,5,10);
+            properties.setMargins(0,0,5,0);
 
             properties.width = 0;
             properties.height = (int)(280 * (this.getResources().getDisplayMetrics().density));
-            properties.weight = bingoCards.size() == 1 ? 30 : 50;
+            properties.weight = bingoCards.size() == 1 ? 50 : 25;
             properties.gravity = Gravity.CENTER_HORIZONTAL;
 
             bc.setLayoutParams(properties);
