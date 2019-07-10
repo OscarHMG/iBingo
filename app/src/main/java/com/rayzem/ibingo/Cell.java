@@ -102,7 +102,6 @@ public class Cell extends FrameLayout {
         int yPos = (int)((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2));
 
 
-        paint.as
 
         if (positionX == 0) {
             canvas.drawColor(Color.TRANSPARENT);
