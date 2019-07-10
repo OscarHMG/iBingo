@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.ViewTreeObserver;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
     private ArrayList<Integer> poolNumbers;
     private ArrayList<BingoCard> bingoCards;
     private LinearLayout contentPanel;
+    private TextView actualBingoNumber;
     BingoCard b1, b2;
 
 
@@ -39,6 +41,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         bingoCards = new ArrayList<>();
 
         contentPanel = findViewById(R.id.contentPanel);
+        actualBingoNumber = findViewById(R.id.actualBingoNumber);
 
 
 
@@ -120,7 +123,8 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         public void run() {
             Random ran = new Random();
             int randomInt = 1 + ran.nextInt(75 - 1 + 1);
-            Toast.makeText(GameActivity.this, "NUMERO: " + randomInt, Toast.LENGTH_LONG).show();
+            //Toast.makeText(GameActivity.this, "NUMERO: " + randomInt, Toast.LENGTH_LONG).show();
+            actualBingoNumber.setText(""+randomInt);
 
             //Add the number, to the pool number.
             poolNumbers.add(new Integer(randomInt));

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -29,8 +30,6 @@ public class Cell extends FrameLayout {
     public Cell(Context context, int x, int y, int content) {
         super(context);
 
-        //View v = LayoutInflater.from(context).inflate(R.layout.cell_view, null);
-        //View v = LayoutInflater.from(context).inflate(R.layout.cell_view, this, false);
         positionX = x;
         positionY = y;
         selected = false;
@@ -126,15 +125,14 @@ public class Cell extends FrameLayout {
 
             }
         }else if(positionY == 2 && positionX == 3){
-            paint.setColor(Color.BLACK);
-            paint.setTextSize(40);
-            //canvas.drawText("X",  xPos, yPos, paint);
+
+            drawStart(canvas);
+
         }else{
             if (selected && positionX != 0) {
-                //canvas.drawColor(Color.RED);
-                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.transparent_red));
+                //canvas.drawColor(ContextCompat.getColor(getContext(), R.color.transparent_red));
+                selectBingonumber(canvas);
             } else {
-                //canvas.drawColor(Color.LTGRAY);
                 canvas.drawColor(ContextCompat.getColor(getContext(), R.color.transparent_lightGray));
 
             }
@@ -145,10 +143,68 @@ public class Cell extends FrameLayout {
     }
 
 
-    private void drawRectangle(){
+    private void drawStart(Canvas canvas){
+        paint.setColor(ContextCompat.getColor(getContext(),R.color.red));
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+
+        float mid = canvas.getWidth() / 2;
+        float min = Math.min(canvas.getWidth(), canvas.getHeight());
+        float fat = min / 17;
+        float half = min / 2;
+        float rad = half - fat;
+        mid = mid - half;
+
+        paint.setStrokeWidth(fat);
+        paint.setStyle(Paint.Style.STROKE);
+
+        canvas.drawCircle(mid + half, half, rad, paint);
+        Path path = new Path();
+
+        path.reset();
+
+        paint.setStyle(Paint.Style.FILL);
+
+
+        // top left
+        path.moveTo(mid + half * 0.5f, half * 0.84f);
+        // top right
+        path.lineTo(mid + half * 1.5f, half * 0.84f);
+        // bottom left
+        path.lineTo(mid + half * 0.68f, half * 1.45f);
+        // top tip
+        path.lineTo(mid + half * 1.0f, half * 0.5f);
+        // bottom right
+        path.lineTo(mid + half * 1.32f, half * 1.45f);
+        // top left
+        path.lineTo(mid + half * 0.5f, half * 0.84f);
+
+        path.close();
+        canvas.drawPath(path, paint);
 
     }
 
+
+    private void selectBingonumber(Canvas canvas){
+        /*
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);*/
+
+        float mid = canvas.getWidth() / 2;
+        float min = Math.min(canvas.getWidth(), canvas.getHeight());
+        float fat = min / 17;
+        float half = min / 2;
+        float rad = half - fat;
+        mid = mid - half;
+
+        paint.setStrokeWidth(5);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setColor(ContextCompat.getColor(getContext(),R.color.transparent_red));
+
+        canvas.drawCircle(mid + half, half, rad, paint);
+        //canvas.drawColor(ContextCompat.getColor(getContext(),R.color.transparent_red));
+        paint.setStrokeWidth(0);
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);

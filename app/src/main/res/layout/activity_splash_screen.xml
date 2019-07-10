@@ -5,31 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashScreenActivity"
-    android:background="@drawable/background_ibingo"
+    android:background="@drawable/pattern_background"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    android:orientation="vertical"
-    android:animateLayoutChanges="true">
 
+    <LinearLayout
+        android:id="@+id/containerHome"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:visibility="visible"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btn_play"
-        android:layout_width="150dp"
+        <ImageView
+            android:src="@drawable/logo_ibingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_play"
+            android:layout_width="150dp"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/darkBrown"
+            android:background="@drawable/button_round"
 
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:textColor="@color/darkBrown"
-        android:background="@drawable/button_round"
+            android:text="JUGAR iBINGO" />
 
-        android:text="JUGAR iBINGO" />
+    </LinearLayout>
+
 
 
 
     <LinearLayout
         android:id="@+id/containerNumTables"
         android:visibility="gone"
-        android:padding="15dp"
+        android:paddingTop="35dp"
+        android:paddingBottom="25dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
         android:background="@drawable/background_transparent"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -40,12 +57,13 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_marginRight="25dp"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/ibingo_logo_no_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:src="@drawable/one_table"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
 
             <TextView
                 android:layout_gravity="center"
@@ -63,18 +81,19 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_marginLeft="25dp"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/ibingo_logo_no_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:src="@drawable/two_tables"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
 
             <TextView
                 android:layout_gravity="center"
                 android:text="2 TABLAS"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

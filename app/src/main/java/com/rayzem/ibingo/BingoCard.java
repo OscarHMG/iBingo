@@ -51,6 +51,8 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
         initBingoCard(gridLayout.getColumnCount(),gridLayout.getRowCount());
 
 
+        bingoButton.setOnClickListener(this);
+
 
 
 

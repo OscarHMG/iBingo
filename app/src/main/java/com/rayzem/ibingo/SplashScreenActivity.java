@@ -39,17 +39,18 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_splash_screen);
         //logo_iBingo = findViewById(R.id.logo_iBingo);
         button_play = findViewById(R.id.btn_play);
-        /*//contentHome = findViewById(R.id.containerHome);
+
+        contentHome = findViewById(R.id.containerHome);
         contentNumTables = findViewById(R.id.containerNumTables);
 
         one_table_container = findViewById(R.id.one_table_match);
-        two_table_container = findViewById(R.id.two_table_match);*/
+        two_table_container = findViewById(R.id.two_table_match);
 
 
 
         button_play.setOnClickListener(this);
-       /* one_table_container.setOnClickListener(this);
-        two_table_container.setOnClickListener(this);*/
+        one_table_container.setOnClickListener(this);
+        two_table_container.setOnClickListener(this);
 
     }
 
@@ -62,10 +63,10 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
 
         switch (view.getId()){
             case R.id.btn_play:
-                /*contentNumTables.setVisibility(View.VISIBLE);
-                contentHome.setVisibility(View.GONE);*/
-                intent.putExtra("numBingoCards", 2);
-                startActivity(intent);
+                contentNumTables.setVisibility(View.VISIBLE);
+                contentHome.setVisibility(View.GONE);
+                /*intent.putExtra("numBingoCards", 2);
+                startActivity(intent);*/
 
                 break;
             case R.id.one_table_match:
