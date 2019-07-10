@@ -123,6 +123,7 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
 
 
 
+
                         //gridLayout.setBackground(getResources().getDrawable(R.drawable.wood_texture));
 
 

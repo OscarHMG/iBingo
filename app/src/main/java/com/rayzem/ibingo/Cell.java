@@ -93,8 +93,16 @@ public class Cell extends FrameLayout {
 
         paint.setColor(Color.BLACK);
         paint.setTextSize(30);
-        int xPos = (canvas.getWidth() / 2);
-        int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
+        paint.setTextAlign(Paint.Align.CENTER);
+        /*int xPos = (int)((canvas.getWidth() / 2) - ((paint.descent() - paint.ascent()) / 2));
+        *//*int xPos = (int) (canvas.getWidth() / 2) - 20; *//*
+        int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2));*/
+
+        int xPos = (int)(canvas.getWidth()/2);
+        int yPos = (int)((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2));
+
+
+        paint.as
 
         if (positionX == 0) {
             canvas.drawColor(Color.TRANSPARENT);
