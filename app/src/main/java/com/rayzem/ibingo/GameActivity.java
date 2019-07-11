@@ -63,29 +63,13 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
 
         b1 = new BingoCard(this, null, GAME_TYPE);
-        //b2 = new BingoCard(this, null, "HORIZONTAL");
 
         contentPanel.addView(b1,0);
-        //contentPanel.addView(b2);
+
 
         bingoCards.add(b1);
-
-        //bingoCards.add(b2);
-
-
-
         b1.setBingoWinInterface(this);
-        //b2.setBingoWinInterface(this);
 
-        /*if(numBingoCards == 2) {
-            setBingoCards(b1);
-            setBingoCards(b2);
-        }else{
-            setBingoCards(b1);
-        }
-
-
-        setLayoutParameters();*/
 
         if(numBingoCards == 2){
             b2 = new BingoCard(this, null, "HORIZONTAL");
@@ -112,15 +96,6 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
     }
 
 
-    private void setBingoCards(BingoCard bingoCard){
-        bingoCard = new BingoCard(this, null, "HORIZONTAL");
-        contentPanel.addView(bingoCard);
-        bingoCards.add(b1);
-        //setLayoutParameters();
-        bingoCard.setBingoWinInterface(this);
-
-    }
-
     private void setPattern(){
         int idPatternImage = 0;
         switch (GAME_TYPE){
@@ -144,9 +119,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
     }
     private void setLayoutParameters(){
-        LinearLayout.LayoutParams propertiesContentPanel = (LinearLayout.LayoutParams) contentPanel.getLayoutParams();
-        propertiesContentPanel.gravity = Gravity.CENTER_HORIZONTAL;
-        contentPanel.setLayoutParams(propertiesContentPanel);
+
 
         for(BingoCard bc: bingoCards){
             LinearLayout.LayoutParams properties = (LinearLayout.LayoutParams) bc.getLayoutParams();
@@ -194,11 +167,11 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         handler.removeCallbacks(runnableCode);
         if(!number.isEmpty()){
             if(poolNumbers.containsAll(number));
-                Log.i("OSCAR", "Bingo!!!!!!!!!!!!!!!!!!!");
+            Toast.makeText(this, "BINGO!!", Toast.LENGTH_LONG).show();
 
         }else{
             //False alarm
-            Log.i("OSCAR", "No bingo!");
+            Toast.makeText(this, "No es bingo. Revisa tu tabla", Toast.LENGTH_LONG).show();
 
         }
     }

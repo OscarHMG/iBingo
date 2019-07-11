@@ -1,6 +1,7 @@
 package com.rayzem.ibingo;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,13 +23,11 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
     private Button bingoButton;
     private LinearLayout contentPanel;
     private Context context;
-    //int poolNumbers [];
 
     private BingoWinInterface bingoWinInterface;
 
-    private ArrayList<Integer> poolNumbers;
 
-    //Simulate bingo
+
 
 
 
@@ -40,7 +39,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
         super(context, attrs);
         this.context = context;
 
-        poolNumbers = new ArrayList<>();
         this.PATRON_TO_WIN = patron;
 
         View v = LayoutInflater.from(context).inflate(R.layout.bingo_card_view, this, true);
@@ -50,18 +48,8 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
 
         initBingoCard(gridLayout.getColumnCount(),gridLayout.getRowCount());
 
-
         bingoButton.setOnClickListener(this);
-
-
         this.setGravity(Gravity.CENTER_HORIZONTAL);
-
-
-        //Center the button.
-        /*LayoutParams layoutParams = (LayoutParams) bingoButton.getLayoutParams();
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
-        bingoButton.setLayoutParams(layoutParams);*/
-
     }
 
 
@@ -105,13 +93,17 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
                         for (int i = 0; i < numOfRow; i++) {
 
                             MARGIN =  i == 0 ? 0: 5;
-
                             for (int j = 0; j < numOfCol; j++) {
                                 GridLayout.LayoutParams params = (GridLayout.LayoutParams) (cells[i][j]).getLayoutParams();
-                                //params.width = cellWidth - 2 * MARGIN;
-                                params.width = cellHeight - 2*MARGIN;
-                                params.height = cellHeight - 2*MARGIN;
+                                //BINGO HEIGHT WORD
+                                if(i == 0)
+                                    params.height = cellHeight - 2 * MARGIN - 50;
+                                else {
 
+                                    params.height = cellHeight - 2 * MARGIN;
+                                }
+
+                                params.width = cellHeight - 2 * MARGIN;
 
                                 params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
                                 (cells[i][j]).setLayoutParams(params);
@@ -119,14 +111,9 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
                             }
                         }
 
-
                         gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-
-
-
-                        //gridLayout.setBackground(getResources().getDrawable(R.drawable.wood_texture));
-
+                        gridLayout.setPadding(15,35,15,35);
+                        gridLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.background_bingo_card));
 
                     }
                 }
@@ -213,11 +200,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
 
     @Override
     public void OnToogled(Cell c, boolean selected) {
-        if(c.getPositionX() != 0 ){
-
-
-        }
-
 
     }
 
@@ -251,12 +233,10 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
     public ArrayList<Integer> verifyHorizontalBingo(){
         ArrayList<Integer> winnerNumbers = new ArrayList<>();
         int cont = 0;
-        boolean isBingo = false;
         for(int i = 1; i< gridLayout.getRowCount(); i++){
             for(int j = 0; j < gridLayout.getColumnCount(); j++){
                 if(cells[i][j].isSelected()){
                     cont ++;
-                    //Log.i("OSCAR", "REVISANDO: "+cells[i][j].getContent());
                     winnerNumbers.add(new Integer(cells[i][j].getContent()));
                 }else{
                     cont = 0;
@@ -265,15 +245,11 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
                 }
             }
 
-            if(cont == 5) {
-                Log.i("OSCAR", "REVISANDO: BINGO!" );
+            if(cont == 5)
                 return winnerNumbers;
-            }else{
-                Log.i("OSCAR", "REVISANDO: LINEA SIGUIENTE!" );
-            }
+
 
         }
-        Log.i("OSCAR", "REVISANDO: NO HUBO BINGO" );
         return winnerNumbers;
     }
 
@@ -286,7 +262,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
 
                 if(cells[i][j].isSelected()){
                     cont ++;
-                    //Log.i("OSCAR", "REVISANDO: "+cells[i][j].getContent());
                     winnerNumbers.add(new Integer(cells[i][j].getContent()));
                 }else{
                     cont = 0;
@@ -294,12 +269,9 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
                     break;
                 }
 
-                if(cont == 5) {
-                    Log.i("OSCAR", "VERTICAL REVISANDO: linea completa vertical!" );
+                if(cont == 5)
                     return winnerNumbers;
-                }else{
-                    Log.i("OSCAR", "REVISANDO: LINEA SIGUIENTE! no vertical" );
-                }
+
             }
         }
 
@@ -314,7 +286,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
             winnerNumbers.add(cells[5][0].getContent());
             winnerNumbers.add(cells[1][4].getContent());
             winnerNumbers.add(cells[5][4].getContent());
-            Log.i("OSCAR","CORNERS BINGO!");
         }
 
         return winnerNumbers;
@@ -327,10 +298,8 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
         if(cells[1][0].isSelected() && cells[2][1].isSelected() && cells[3][2].isSelected() && cells[4][3].isSelected() && cells[5][4].isSelected() ){
             winnerNumbers.add(cells[1][0].getContent());
             winnerNumbers.add(cells[2][1].getContent());
-            //winnerNumbers.add(cells[3][2].getContent());
             winnerNumbers.add(cells[4][3].getContent());
             winnerNumbers.add(cells[5][4].getContent());
-            Log.i("OSCAR","DIAGONAL BINGO!");
 
         }
 
@@ -347,8 +316,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
             //winnerNumbers.add(cells[3][2].getContent());
             winnerNumbers.add(cells[4][3].getContent());
             winnerNumbers.add(cells[5][4].getContent());
-            Log.i("OSCAR","DIAGONAL ASCENDENTE BINGO!");
-
         }
 
         return winnerNumbers;
@@ -358,8 +325,6 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bingoButton:
-                Toast.makeText(context, "BINGO!", Toast.LENGTH_SHORT).show();
-
                 bingoWinInterface.verifyBingoNumbers(sendToVerifyWinnerNumbers());
                 break;
         }

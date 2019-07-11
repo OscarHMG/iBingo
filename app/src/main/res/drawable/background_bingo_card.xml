@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:shape="rectangle">
+
+
+    <stroke
+        android:width="0.9dp"
+        android:color="@color/brown_3" />
+    <solid
+        android:color="@color/brown_2"/>
+    <corners android:radius="10dp" />
+</shape>
+
+
+
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+        <shape
+            android:shape="rectangle">
+            <solid android:color="@color/transparent_black" />
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+    <item android:right="0dp" android:left="5dp" android:bottom="4dp">
+        <shape
+            android:padding="16dp"
+            android:shape="rectangle">
+            <solid android:color="@color/brown_2"/>
+            <corners android:radius="10dp"/>
+            <stroke
+                android:width="0.9dp"
+                android:color="@color/brown_3" />
+        </shape>
+    </item>
+</layer-list>-->
+
+
+<!-- MIOOOO -->
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:shape="rectangle">
+
+    <item android:bottom="8dp">
+        <shape android:shape="rectangle" >
+            <size android:height="3dp" />
+
+            <solid android:color="#43000000" />
+        </shape>
+    </item>
+
+    <stroke
+        android:width="0.9dp"
+        android:color="@color/brown_3" />
+    <solid
+        android:color="@color/brown_2"/>
+    <corners android:radius="10dp" />
+</shape>-->
+
+<!--
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            &lt;!&ndash; SHADOW LAYER &ndash;&gt;
+            <item android:left="4dp" android:top="4dp">
+                <shape>
+                    <solid android:color="#66000000" />
+                    <corners android:radius="10dip"/>
+                </shape>
+            </item>
+            &lt;!&ndash; CONTENT LAYER &ndash;&gt;
+            <item android:bottom="4dp" android:right="0dp">
+                <shape>
+                    <solid android:color="@color/brown_2" />
+                    <corners android:radius="10dip"/>
+                    <stroke
+                        android:width="0.9dp"
+                        android:color="@color/brown_3" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>-->
+
+
