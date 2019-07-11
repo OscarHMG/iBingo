@@ -11,8 +11,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-
+        android:orientation="horizontal"
         android:background="@android:color/transparent">
+
+        <ImageButton
+            android:id="@+id/button_home"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_home"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/show_all_bingo_numbers"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_list"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <!--<Button
             android:gravity="center_horizontal"
@@ -45,14 +63,14 @@
             android:layout_weight="20"
             android:layout_marginLeft="20dp"
             android:orientation="vertical"
-            android:layout_height="120dp">
+            android:layout_height="140dp">
 
 
 
 
             <!-- Contenedor de informacion general-->
             <LinearLayout
-                android:padding="5dp"
+                android:padding="10dp"
                 android:orientation="vertical"
                 android:background="@drawable/background_transparent"
                 android:layout_width="match_parent"
@@ -60,13 +78,13 @@
 
                 <!-- 1era fila -->
                 <LinearLayout
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <!-- Bingos por jugar layout -->
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
@@ -82,7 +100,37 @@
 
 
 
-                    </LinearLayout>
+
+                    </LinearLayout>-->
+                    <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/relativelayout"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <ImageView
+                            android:id="@+id/bingo_ball_image"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/actualBingoNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/bingo_ball_image"
+                            android:layout_alignTop="@id/bingo_ball_image"
+                            android:layout_alignRight="@id/bingo_ball_image"
+                            android:layout_alignBottom="@id/bingo_ball_image"
+                            android:layout_margin="1dp"
+                            android:gravity="center"
+
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_gravity="center"
@@ -127,10 +175,9 @@
 
 
                         <ImageView
-
-                            android:src="@drawable/one_table"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp" />
+                            android:id="@+id/pattern_game"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -158,14 +205,13 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
-                    android:background="@drawable/button_round"
+                <!--<ImageButton
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_list"
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="9sp"
-                    android:text="Todos"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />-->
 
 
             </LinearLayout>

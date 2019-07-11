@@ -54,10 +54,11 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
         bingoButton.setOnClickListener(this);
 
 
+        this.setGravity(Gravity.CENTER_HORIZONTAL);
 
 
-        /*bingoButton.setOnClickListener(this);
-        LayoutParams layoutParams = (LayoutParams) bingoButton.getLayoutParams();
+        //Center the button.
+        /*LayoutParams layoutParams = (LayoutParams) bingoButton.getLayoutParams();
         layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
         bingoButton.setLayoutParams(layoutParams);*/
 

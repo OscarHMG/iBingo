@@ -32,8 +32,9 @@
             android:layout_marginBottom="30dp"
             android:textColor="@color/darkBrown"
             android:background="@drawable/button_round"
-
-            android:text="JUGAR iBINGO" />
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:text="Jugar iBingo" />
 
     </LinearLayout>
 
