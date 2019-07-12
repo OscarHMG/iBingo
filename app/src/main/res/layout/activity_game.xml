@@ -4,97 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/pattern_background"
+    android:orientation="vertical"
     tools:context=".GameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/button_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_home"
             android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/ic_home" />
 
         <ImageButton
             android:id="@+id/show_all_bingo_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_list"
             android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/ic_list" />
 
-        <!--<Button
-            android:gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:drawableStart="@drawable/ic_account_circle"
-            android:layout_width="50dp"
-
-            android:background="@drawable/background_transparent"
-            android:layout_height="50dp" />-->
 
     </LinearLayout>
 
-    <!--android:paddingTop="5dp" -->
 
     <LinearLayout
         android:id="@+id/contentPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp"
         android:paddingTop="10dp"
         android:paddingRight="25dp"
-        android:paddingLeft="25dp"
-        android:paddingBottom="15dp"
-        android:orientation="horizontal">
+        android:paddingBottom="15dp">
 
 
         <LinearLayout
 
             android:layout_width="0dp"
-            android:layout_weight="20"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_weight="20"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:padding="10dp"
-                android:orientation="vertical"
-                android:background="@drawable/background_transparent"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/background_transparent"
                 android:gravity="center_horizontal"
-                android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
-                    android:text="NUMERO"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NÚMERO"
                     android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/relativelayout"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
 
                     <ImageView
                         android:id="@+id/bingo_ball_image"
                         android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        />
+                        android:layout_height="50dp" />
 
                     <TextView
                         android:id="@+id/actualBingoNumber"
@@ -108,39 +96,39 @@
                         android:gravity="center"
 
                         android:textColor="@color/black"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
             </LinearLayout>
 
 
-
             <!-- Contenedor de informacion general-->
             <LinearLayout
                 android:id="@+id/containerGeneralInfo"
-                android:padding="10dp"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                android:background="@drawable/background_transparent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_transparent"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="visible">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="3dp"
-                    android:layout_height="wrap_content">
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:text="Patron"
-                        android:textSize="12sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:layout_height="wrap_content" />
+                        android:text="Patrón"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
                     <ImageView
                         android:id="@+id/pattern_game"
                         android:layout_width="40dp"
@@ -148,162 +136,180 @@
 
                     <TextView
                         android:id="@+id/tv_pattern_game"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <!-- Segunda fila-->
                 <LinearLayout
-                    android:layout_marginLeft="3dp"
-                    android:orientation="vertical"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="3dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_gravity="center"
-                        android:gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
                         <ImageView
 
-                            android:src="@drawable/ic_account_circle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_account_circle" />
 
                         <TextView
-                            android:layout_marginLeft="5dp"
-                            android:textSize="15sp"
-                            android:text="250"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="250"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
 
-
                     <LinearLayout
 
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:orientation="vertical"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_gravity="center"
-                            android:textSize="15sp"
-                            android:textColor="@color/white"
-                            android:id="@+id/numBingosLeft"
-                            android:text="5"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:textSize="10sp"
+                            android:id="@+id/numBingosLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="5"
                             android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="bingos faltan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
 
 
                     </LinearLayout>
                 </LinearLayout>
 
-                <!--<ImageButton
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_list"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />-->
-
 
             </LinearLayout>
-
 
 
             <LinearLayout
                 android:id="@+id/containerPoolNumbers"
-                android:visibility="gone"
-                android:padding="10dp"
-                android:orientation="horizontal"
-                android:background="@drawable/background_transparent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/background_transparent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="gone">
 
-                <Button
-                    android:background="@color/blue"
-                    android:text="X"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/column_1_pool_number"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-                </LinearLayout>
 
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/column_2_pool_number"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/closePoolBingoNumber"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/column_3_pool_number"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Números jugados" />
 
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/column_4_pool_number"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/column_1_pool_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/column_2_pool_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/column_3_pool_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/column_4_pool_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/column_5_pool_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/column_5_pool_number"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-
-
-                </LinearLayout>
-
-
-
 
 
             </LinearLayout>
 
+
+            <!-- X -->
 
 
         </LinearLayout>

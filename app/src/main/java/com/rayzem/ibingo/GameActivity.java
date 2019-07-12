@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
             column_4_pool_number, column_5_pool_number, containerGeneralInfo, containerPoolNumbers;
     private TextView actualBingoNumber;
     private BingoCard b1, b2;
-    private ImageButton buttonHome, buttonShowBingoNumbers;
+    private ImageButton buttonHome, buttonShowBingoNumbers, closePoolBingoNumber;
     private String GAME_TYPE = "VERTICAL";
     private ImageView bingo_ball_image, pattern_game;
     private  TextView tv_pattern_game;
@@ -72,6 +72,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         tv_pattern_game = findViewById(R.id.tv_pattern_game);
         buttonHome = findViewById(R.id.button_home);
         buttonShowBingoNumbers = findViewById(R.id.show_all_bingo_numbers);
+        closePoolBingoNumber = findViewById(R.id.closePoolBingoNumber);
 
         initBingoCards(numBingoCards);
 
@@ -119,6 +120,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         setLayoutParameters();
         buttonHome.setOnClickListener(this);
         buttonShowBingoNumbers.setOnClickListener(this);
+        closePoolBingoNumber.setOnClickListener(this);
         setPatternBingoGame();
 
         setPoolNumbers();
@@ -214,7 +216,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
             for(PoolNumber p: poolNumbersViews){
                 if(p.getNumber() == randomInt) {
-                    p.getTextView().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_2));
+                    p.getTextView().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_red));
                     p.getTextView().setTypeface(p.getTextView().getTypeface(), Typeface.BOLD);
                 }
             }
@@ -234,7 +236,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
         }else{
             //False alarm
-            Toast.makeText(this, "Bingo no valido. Revisa tu tabla", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bingo no válido. Revisa tu tabla", Toast.LENGTH_LONG).show();
 
         }
     }
@@ -251,6 +253,12 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
                 containerGeneralInfo.setVisibility(View.GONE);
                 containerPoolNumbers.setVisibility(View.VISIBLE);
                 break;
+
+            case R.id.closePoolBingoNumber:
+                containerGeneralInfo.setVisibility(View.VISIBLE);
+                containerPoolNumbers.setVisibility(View.GONE);
+                break;
+
         }
     }
 

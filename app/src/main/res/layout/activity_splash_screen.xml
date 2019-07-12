@@ -69,8 +69,9 @@
             <TextView
                 android:layout_gravity="center"
                 android:text="1 TABLA"
-                android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -93,7 +94,8 @@
             <TextView
                 android:layout_gravity="center"
                 android:text="2 TABLAS"
-                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

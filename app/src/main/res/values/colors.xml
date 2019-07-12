@@ -21,10 +21,13 @@
     <color name="brown_3">#927862</color>
 
     <color name="red_2">#e42828</color>
+    <color name="dark_red">#9f1414</color>
     <color name="transparent_red">#80e42828</color>
     <color name="transparent_lightGray">#35EFF0F1</color>
 
     <color name="transparent_gray">#35eff0f1</color>
     <color name="transparent_black">#35000000</color>
+
+
 
 </resources>
