@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:background="@android:color/transparent">
 
@@ -50,7 +50,7 @@
         android:id="@+id/contentPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="15dp"
+        android:paddingTop="10dp"
         android:paddingRight="25dp"
         android:paddingLeft="25dp"
         android:paddingBottom="15dp"
@@ -58,79 +58,113 @@
 
 
         <LinearLayout
-            android:layout_marginTop="50dp"
+
             android:layout_width="0dp"
             android:layout_weight="20"
             android:layout_marginLeft="20dp"
             android:orientation="vertical"
-            android:layout_height="140dp">
+            android:layout_height="wrap_content">
 
-
-
-
-            <!-- Contenedor de informacion general-->
             <LinearLayout
                 android:padding="10dp"
                 android:orientation="vertical"
                 android:background="@drawable/background_transparent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_marginBottom="5dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
 
-                <!-- 1era fila -->
+                <TextView
+                    android:text="NUMERO"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/relativelayout"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:id="@+id/bingo_ball_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/actualBingoNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/bingo_ball_image"
+                        android:layout_alignTop="@id/bingo_ball_image"
+                        android:layout_alignRight="@id/bingo_ball_image"
+                        android:layout_alignBottom="@id/bingo_ball_image"
+                        android:layout_margin="1dp"
+                        android:gravity="center"
+
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
+            <!-- Contenedor de informacion general-->
+            <LinearLayout
+                android:id="@+id/containerGeneralInfo"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:background="@drawable/background_transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <LinearLayout
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_marginRight="3dp"
                     android:layout_height="wrap_content">
 
-                    <!-- Bingos por jugar layout -->
-                    <!--<LinearLayout
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
+                    <TextView
+                        android:text="Patron"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textSize="25sp"
-                            android:textColor="@color/white"
-                            android:id="@+id/actualBingoNumber"
-                            android:text="5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/pattern_game"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
 
-
-
-
-                    </LinearLayout>-->
-                    <RelativeLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/relativelayout"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
+                    <TextView
+                        android:id="@+id/tv_pattern_game"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/bingo_ball_image"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                             />
-
-                        <TextView
-                            android:id="@+id/actualBingoNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/bingo_ball_image"
-                            android:layout_alignTop="@id/bingo_ball_image"
-                            android:layout_alignRight="@id/bingo_ball_image"
-                            android:layout_alignBottom="@id/bingo_ball_image"
-                            android:layout_margin="1dp"
-                            android:gravity="center"
-
-                            android:textColor="@color/black"
-                            android:textStyle="bold"/>
-
-                    </RelativeLayout>
+                <!-- Segunda fila-->
+                <LinearLayout
+                    android:layout_marginLeft="3dp"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_gravity="center"
@@ -147,7 +181,7 @@
 
                         <TextView
                             android:layout_marginLeft="5dp"
-                            android:textSize="14sp"
+                            android:textSize="15sp"
                             android:text="250"
                             android:textStyle="bold"
                             android:textColor="@color/white"
@@ -156,48 +190,31 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
 
-                <!-- Segunda fila-->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:gravity="center_horizontal"
-
-                    android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:gravity="center_horizontal"
+
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-
-                        <ImageView
-                            android:id="@+id/pattern_game"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:textSize="15sp"
                             android:textColor="@color/white"
                             android:id="@+id/numBingosLeft"
                             android:text="5"
+                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
-                        <TextView
-                            android:textSize="9sp"
-                            android:textColor="@color/white"
 
-                            android:text="bingos por jugar"
+                        <TextView
+                            android:textSize="10sp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:text="bingos faltan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -217,6 +234,75 @@
             </LinearLayout>
 
 
+
+            <LinearLayout
+                android:id="@+id/containerPoolNumbers"
+                android:visibility="gone"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:background="@drawable/background_transparent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:background="@color/blue"
+                    android:text="X"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/column_1_pool_number"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/column_2_pool_number"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/column_3_pool_number"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/column_4_pool_number"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/column_5_pool_number"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
 
 
 
