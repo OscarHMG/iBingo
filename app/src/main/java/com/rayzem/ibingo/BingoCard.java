@@ -337,4 +337,12 @@ public class BingoCard extends LinearLayout implements Cell.OnToggledListener, V
     public interface BingoWinInterface {
         void verifyBingoNumbers(ArrayList<Integer> number);
     }
+
+    public String getPATRON_TO_WIN() {
+        return PATRON_TO_WIN;
+    }
+
+    public void setPATRON_TO_WIN(String PATRON_TO_WIN) {
+        this.PATRON_TO_WIN = PATRON_TO_WIN;
+    }
 }

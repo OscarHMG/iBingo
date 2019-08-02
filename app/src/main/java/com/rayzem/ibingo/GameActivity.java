@@ -1,8 +1,12 @@
 package com.rayzem.ibingo;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import com.squareup.okhttp.internal.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
@@ -29,26 +42,114 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
     private ArrayList<BingoCard> bingoCards;
     private LinearLayout contentPanel, column_1_pool_number, column_2_pool_number, column_3_pool_number,
             column_4_pool_number, column_5_pool_number, containerGeneralInfo, containerPoolNumbers;
-    private TextView actualBingoNumber;
+
+    private TextView actualBingoNumber, totalPeopleRoom, bingosLeft;
     private BingoCard b1, b2;
     private ImageButton buttonHome, buttonShowBingoNumbers, closePoolBingoNumber;
-    private String GAME_TYPE = "VERTICAL";
+    private String GAME_TYPE = "";
     private ImageView bingo_ball_image, pattern_game;
     private  TextView tv_pattern_game;
     private int[] bingoBallColors = {R.drawable.black_bingo_ball, R.drawable.blue_bingo_ball, R.drawable.dark_purple_bingo_ball,
                               R.drawable.gray_bingo_ball, R.drawable.light_blue_bingo_ball, R.drawable.orange_bingo_ball,
                               R.drawable.purple_bingo_ball, R.drawable.red_bingo_ball,R.drawable.turquoise_bingo_ball, R.drawable.yellow_bingo_ball };
 
+    private ProgressDialog progressDialog;
     private TextToSpeech textToSpeech;
+
+    private Socket socket;
+
+    private final static String URL = "http://02402933.ngrok.io/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        final int numBingoCards = getIntent().getIntExtra("numBingoCards", 1);
+
+        if(!checkInternetConnection()){
+            Utility.showAlertDialog(this, "Error", "No internet connection", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
+        }else{
+
+            progressDialog = Utility.showPogressDialog(this, "Espere..");
+            initUI();
+            initBingoCards(numBingoCards);
+
+            socket.on("number", new Emitter.Listener(){
+                @Override
+                public void call(final Object... args) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+
+                            try{
+                                JSONObject data = (JSONObject) args[0];
+                                GAME_TYPE = data.getString("gameType");
+                                setPatternBingoGame(GAME_TYPE);
+                                b1.setPATRON_TO_WIN(GAME_TYPE);
+
+                                if (numBingoCards == 2){
+                                    b2.setPATRON_TO_WIN(GAME_TYPE);
+                                }
+
+                                showBallNumber(data.getInt("number"));
+                                totalPeopleRoom.setText(data.getString("peopleInTheRoom"));
+                                bingosLeft.setText(data.getString("bingosToPlay"));
+
+                            }catch(JSONException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (textToSpeech != null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+
+        if(handler != null){
+            handler.removeCallbacks(runnableCode);
+        }
+    }
+
+
+    public void initSocket(){
+        try {
+            socket = IO.socket(URL);
+            socket.connect();
+
+
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initUI(){
         textToSpeech = new TextToSpeech(this, this);
 
-        int numBingoCards = getIntent().getIntExtra("numBingoCards", 1);
+
 
         poolNumbers = new ArrayList<>();
         poolNumbersViews = new ArrayList<>();
@@ -70,34 +171,15 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         bingo_ball_image = findViewById(R.id.bingo_ball_image);
         pattern_game = findViewById(R.id.pattern_game);
         tv_pattern_game = findViewById(R.id.tv_pattern_game);
+        totalPeopleRoom = findViewById(R.id.totalPeopleRoom);
+        bingosLeft = findViewById(R.id.numBingosLeft);
+
         buttonHome = findViewById(R.id.button_home);
         buttonShowBingoNumbers = findViewById(R.id.show_all_bingo_numbers);
         closePoolBingoNumber = findViewById(R.id.closePoolBingoNumber);
 
-        initBingoCards(numBingoCards);
+        initSocket();
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (textToSpeech != null){
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-        }
-
-        if(handler != null){
-            handler.removeCallbacks(runnableCode);
-        }
     }
 
     public void initBingoCards(int numBingoCards){
@@ -111,7 +193,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
 
         if(numBingoCards == 2){
-            b2 = new BingoCard(this, null, "HORIZONTAL");
+            b2 = new BingoCard(this, null, GAME_TYPE);
             contentPanel.addView(b2, 0);
             bingoCards.add(b2);
             b2.setBingoWinInterface(this);
@@ -121,7 +203,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         buttonHome.setOnClickListener(this);
         buttonShowBingoNumbers.setOnClickListener(this);
         closePoolBingoNumber.setOnClickListener(this);
-        setPatternBingoGame();
+        //setPatternBingoGame();
 
         setPoolNumbers();
     }
@@ -150,7 +232,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         }
     }
 
-    private void setPatternBingoGame(){
+    private void setPatternBingoGame(String GAME_TYPE){
         int idPatternImage = 0;
         String patternString = "";
         switch (GAME_TYPE){
@@ -226,13 +308,35 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
     };
 
 
+    private void showBallNumber(int randomInt){
+        Random randomColor = new Random();
+        //Random color
+        int randomIntColor = randomColor.nextInt(10);
+        bingo_ball_image.setImageResource(bingoBallColors[randomIntColor]);
+        actualBingoNumber.setText(""+randomInt);
+
+        //speechNumberBingo(""+randomInt);
+
+        //Add the number, to the pool number.
+        poolNumbers.add(new Integer(randomInt));
+
+        for(PoolNumber p: poolNumbersViews){
+            if(p.getNumber() == randomInt) {
+                p.getTextView().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_red));
+                p.getTextView().setTypeface(p.getTextView().getTypeface(), Typeface.BOLD);
+            }
+        }
+    }
+
     @Override
     public void verifyBingoNumbers(ArrayList<Integer> number) {
 
         if(!number.isEmpty()){
             if(poolNumbers.containsAll(number));
-            handler.removeCallbacks(runnableCode);
+            //handler.removeCallbacks(runnableCode);
             Toast.makeText(this, "BINGO!!", Toast.LENGTH_LONG).show();
+
+            socket.emit("BINGO", null);
 
         }else{
             //False alarm
@@ -314,6 +418,20 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
             Log.e("TextToSpeech", "Initilization Failed!");
         }
 
-        handler.post(runnableCode);
+        //handler.post(runnableCode);
+    }
+
+
+    private boolean checkInternetConnection(){
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        boolean isConnected = false;
+        if (connectivityManager != null) {
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            isConnected = (activeNetwork != null) && (activeNetwork.isConnectedOrConnecting());
+        }
+
+        return isConnected;
     }
 }
