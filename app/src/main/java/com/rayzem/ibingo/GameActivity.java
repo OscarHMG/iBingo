@@ -23,10 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.squareup.okhttp.internal.Util;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,12 +60,18 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
     private Socket socket;
 
-    private final static String URL = "http://02402933.ngrok.io/";
+    private final static String URL = "http://f0cc7443.ngrok.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
 
         final int numBingoCards = getIntent().getIntExtra("numBingoCards", 1);
 
@@ -90,6 +98,7 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
                             try{
                                 JSONObject data = (JSONObject) args[0];
+                                JSONArray nummbers = data.getJSONArray("poolNumbers");
                                 GAME_TYPE = data.getString("gameType");
                                 setPatternBingoGame(GAME_TYPE);
                                 b1.setPATRON_TO_WIN(GAME_TYPE);
@@ -97,6 +106,8 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
                                 if (numBingoCards == 2){
                                     b2.setPATRON_TO_WIN(GAME_TYPE);
                                 }
+
+                                fillPoolNumbers(nummbers);
 
                                 showBallNumber(data.getInt("number"));
                                 totalPeopleRoom.setText(data.getString("peopleInTheRoom"));
@@ -107,6 +118,29 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
                             }
                         }
                     });
+                }
+            });
+
+            socket.on("gameOver", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    Log.i("END", "GAME OVER");
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utility.showAlertDialog(GameActivity.this, "Partida finalizada", "No quedan bingos por jugar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    socket.disconnect();
+                                    Intent intent = new Intent(GameActivity.this, SplashScreenActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
+                    });
+
                 }
             });
         }
@@ -131,6 +165,8 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         if(handler != null){
             handler.removeCallbacks(runnableCode);
         }
+
+        socket.disconnect();
     }
 
 
@@ -315,10 +351,12 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         bingo_ball_image.setImageResource(bingoBallColors[randomIntColor]);
         actualBingoNumber.setText(""+randomInt);
 
-        //speechNumberBingo(""+randomInt);
+        speechNumberBingo(""+randomInt);
 
         //Add the number, to the pool number.
-        poolNumbers.add(new Integer(randomInt));
+        //poolNumbers.add(new Integer(randomInt));
+
+
 
         for(PoolNumber p: poolNumbersViews){
             if(p.getNumber() == randomInt) {
@@ -330,13 +368,19 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
 
     @Override
     public void verifyBingoNumbers(ArrayList<Integer> number) {
-
         if(!number.isEmpty()){
             if(poolNumbers.containsAll(number));
-            //handler.removeCallbacks(runnableCode);
-            Toast.makeText(this, "BINGO!!", Toast.LENGTH_LONG).show();
+            socket.emit("BINGO", "");
 
-            socket.emit("BINGO", null);
+            Utility.showAlertDialog(GameActivity.this, "Partida finalizada", "BINGO, has ganado!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    socket.disconnect();
+                    Intent intent = new Intent(GameActivity.this, SplashScreenActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
 
         }else{
             //False alarm
@@ -433,5 +477,12 @@ public class GameActivity extends AppCompatActivity implements BingoCard.BingoWi
         }
 
         return isConnected;
+    }
+
+    private void fillPoolNumbers(JSONArray array) throws JSONException {
+        poolNumbers.clear();
+        for(int i =0; i<array.length(); i++){
+            poolNumbers.add(new Integer((Integer) array.get(i)));
+        }
     }
 }
